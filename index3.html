@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSME Marketplace</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f6f1e9;
+    color:#292329;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:none;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#351b38,#6d2145,#b85d4d);
+    padding:20px;
+}
+
+.login-box{
+    width:420px;
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:800;
+    color:#70264b;
+    margin-bottom:8px;
+}
+
+.logo-sub{
+    text-align:center;
+    color:#777;
+    margin-bottom:30px;
+}
+
+.login-box h2{
+    margin-bottom:20px;
+}
+
+.login-box input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.role-selection{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.role-btn{
+    flex:1;
+    padding:13px;
+    border:2px solid #ddd;
+    border-radius:12px;
+    background:white;
+}
+
+.role-btn.active{
+    background:#70264b;
+    color:white;
+    border-color:#70264b;
+}
+
+.primary-btn{
+    background:linear-gradient(135deg,#70264b,#a8454f);
+    color:white;
+    padding:14px 22px;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+.primary-btn:hover{
+    opacity:.9;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+    height:100vh;
+    overflow:hidden;
+}
+
+.layout{
+    display:flex;
+    height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    width:270px;
+    background:linear-gradient(180deg,#321a38,#5b2045,#792b52);
+    color:white;
+    padding:25px 14px;
+    flex-shrink:0;
+    overflow-y:auto;
+}
+
+.sidebar::-webkit-scrollbar{
+    width:5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#b76a75;
+    border-radius:10px;
+}
+
+.sidebar-logo{
+    font-size:25px;
+    font-weight:800;
+    padding:0 16px 22px;
+}
+
+.mode-box{
+    background:rgba(255,255,255,.1);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:22px;
+}
+
+.mode-title{
+    font-size:12px;
+    opacity:.7;
+    margin-bottom:5px;
+}
+
+.mode-name{
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+.switch-btn{
+    width:100%;
+    padding:9px;
+    border-radius:9px;
+    background:#f0b45b;
+    color:#3b2033;
+    font-weight:bold;
+}
+
+.section-title{
+    font-size:12px;
+    letter-spacing:1px;
+    opacity:.65;
+    padding:10px 16px;
+    margin-top:5px;
+}
+
+.side-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:14px 16px;
+    margin:3px 0;
+    border-radius:12px;
+    background:transparent;
+    color:white;
+    text-align:left;
+    font-size:15px;
+}
+
+.side-btn:hover{
+    background:rgba(255,255,255,.1);
+}
+
+.side-btn.active{
+    background:linear-gradient(90deg,#713040,#8c3547);
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.icon{
+    width:25px;
+    text-align:center;
+    font-size:19px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    flex:1;
+    overflow-y:auto;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:white;
+    border-radius:18px;
+    padding:15px 22px;
+    margin-bottom:22px;
+    box-shadow:0 5px 20px rgba(45,20,30,.07);
+}
+
+.topbar h3{
+    color:#51203d;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    background:#76284c;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* ================= PAGES ================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.hero{
+    background:linear-gradient(135deg,#291b35,#5a2045);
+    color:white;
+    padding:35px;
+    border-radius:25px;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    opacity:.85;
+    max-width:650px;
+}
+
+.category-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:22px;
+}
+
+.category{
+    padding:11px 18px;
+    border-radius:25px;
+    background:white;
+    white-space:nowrap;
+    border:1px solid #eee;
+}
+
+.category.active{
+    background:#6f2948;
+    color:white;
+}
+
+.search{
+    width:100%;
+    padding:15px;
+    border-radius:13px;
+    border:1px solid #ddd;
+    margin-bottom:22px;
+}
+
+/* ================= PRODUCTS ================= */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+}
+
+.product-card{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+    transition:.2s;
+}
+
+.product-card:hover{
+    transform:translateY(-4px);
+}
+
+.product-img{
+    height:220px;
+    width:100%;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:16px;
+}
+
+.badge{
+    display:inline-block;
+    background:#f1d65a;
+    padding:5px 9px;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.product-name{
+    font-weight:bold;
+    font-size:17px;
+    margin-bottom:6px;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+    color:#72274a;
+}
+
+.rating{
+    color:#d99a24;
+    margin:7px 0;
+}
+
+.buy-btn{
+    width:100%;
+    padding:11px;
+    border-radius:10px;
+    background:#70264b;
+    color:white;
+    margin-top:8px;
+}
+
+/* ================= STATUS ================= */
+
+.status-row{
+    display:flex;
+    gap:15px;
+    overflow-x:auto;
+    margin-bottom:25px;
+}
+
+.status{
+    min-width:90px;
+    text-align:center;
+}
+
+.status-img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    object-fit:cover;
+    padding:3px;
+    border:3px solid #c74f66;
+    margin-bottom:6px;
+}
+
+/* ================= CARDS ================= */
+
+.card{
+    background:white;
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+.card h2{
+    color:#56203f;
+    margin-bottom:18px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.stat{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+.stat-icon{
+    font-size:25px;
+}
+
+.stat h3{
+    font-size:26px;
+    margin:8px 0;
+    color:#682447;
+}
+
+.stat p{
+    color:#777;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:14px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    color:#632443;
+    background:#faf5f2;
+}
+
+.small-btn{
+    padding:7px 11px;
+    border-radius:8px;
+    background:#eee;
+}
+
+.green{
+    color:#18834b;
+    font-weight:bold;
+}
+
+.red{
+    color:#c23d48;
+    font-weight:bold;
+}
+
+/* ================= FORMS ================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:white;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+/* ================= DASHBOARD SHORTCUTS ================= */
+
+.shortcut-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.shortcut{
+    padding:22px;
+    background:white;
+    border-radius:17px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    cursor:pointer;
+}
+
+.shortcut:hover{
+    background:#faf0f2;
+}
+
+.shortcut-icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.shortcut h3{
+    color:#59203f;
+    margin-bottom:5px;
+}
+
+/* ================= WHATSAPP ================= */
+
+.whatsapp{
+    max-width:650px;
+    background:#e5ddd5;
+    border-radius:18px;
+    overflow:hidden;
+    margin:auto;
+}
+
+.wa-header{
+    background:#075e54;
+    color:white;
+    padding:17px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.wa-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#25d366;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.wa-body{
+    min-height:430px;
+    padding:20px;
+    background:#efeae2;
+}
+
+.message{
+    padding:10px 13px;
+    border-radius:10px;
+    max-width:75%;
+    margin-bottom:12px;
+    width:max-content;
+}
+
+.incoming{
+    background:white;
+}
+
+.outgoing{
+    background:#d9fdd3;
+    margin-left:auto;
+}
+
+.wa-input{
+    background:white;
+    padding:12px;
+    display:flex;
+    gap:8px;
+}
+
+.wa-input input{
+    flex:1;
+    padding:12px;
+    border-radius:20px;
+    border:1px solid #ddd;
+}
+
+.send{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#25d366;
+    color:white;
+}
+
+/* ================= CALCULATOR ================= */
+
+.result-box{
+    background:#f8edf0;
+    border-radius:15px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.result-number{
+    font-size:30px;
+    font-weight:bold;
+    color:#70264b;
+}
+
+/* ================= ANALYTICS ================= */
+
+.chart{
+    display:flex;
+    align-items:end;
+    gap:18px;
+    height:240px;
+    padding:20px;
+    border-bottom:1px solid #ddd;
+}
+
+.bar{
+    flex:1;
+    background:linear-gradient(#762b4d,#c76b68);
+    border-radius:8px 8px 0 0;
+    position:relative;
+    min-height:20px;
+}
+
+.bar span{
+    position:absolute;
+    bottom:-25px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:12px;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    max-width:500px;
+    width:100%;
+}
+
+.close{
+    float:right;
+    font-size:25px;
+    background:none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+    .sidebar{
+        width:220px;
+    }
+
+    .stats,
+    .shortcut-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+    .layout{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        height:190px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .stats,
+    .shortcut-grid,
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
+
+<div class="login-box">
+
+<div class="logo">MSME MARKET</div>
+<div class="logo-sub">India's Digital Marketplace for MSMEs</div>
+
+<h2>Welcome Back</h2>
+
+<input id="loginName" placeholder="Enter your name">
+
+<input type="email" placeholder="Email address">
+
+<input type="password" placeholder="Password">
+
+<p style="margin-bottom:8px;font-weight:bold;">Choose your role</p>
+
+<div class="role-selection">
+<button class="role-btn active" onclick="chooseLoginRole(this,'buyer')">
+🛍️ Buyer
+</button>
+
+<button class="role-btn" onclick="chooseLoginRole(this,'seller')">
+🏭 Seller
+</button>
+</div>
+
+<button class="primary-btn" style="width:100%;" onclick="login()">
+Login to Marketplace
+</button>
+
+<p style="text-align:center;margin-top:15px;color:#888;font-size:13px;">
+Prototype login — no real account required
+</p>
+
+</div>
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app">
+
+<div class="layout">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+MSME<span style="color:#f0b45b;">.</span>
+</div>
+
+<div class="mode-box">
+
+<div class="mode-title">CURRENT MODE</div>
+
+<div class="mode-name" id="modeName">
+🛍️ BUYER
+</div>
+
+<button class="switch-btn" onclick="switchMode()">
+🔄 Switch to Seller
+</button>
+
+</div>
+
+
+<!-- BUYER SIDEBAR -->
+
+<div id="buyerSidebar">
+
+<div class="section-title">MARKETPLACE</div>
+
+<button class="side-btn active" onclick="showPage('home',this)">
+<span class="icon">🏠</span> Home
+</button>
+
+<button class="side-btn" onclick="showPage('marketplace',this)">
+<span class="icon">🛍️</span> Explore Products
+</button>
+
+<button class="side-btn" onclick="showPage('myOrders',this)">
+<span class="icon">📦</span> My Orders
+</button>
+
+<button class="side-btn" onclick="showPage('status',this)">
+<span class="icon">🏷️</span> MSME Status
+</button>
+
+</div>
+
+
+<!-- SELLER SIDEBAR -->
+
+<div id="sellerSidebar" style="display:none;">
+
+<div class="section-title">SELLER TOOLS</div>
+
+<button class="side-btn" onclick="showPage('dashboard',this)">
+<span class="icon">📊</span> Dashboard
+</button>
+
+<button class="side-btn" onclick="showPage('products',this)">
+<span class="icon">📦</span> My Products
+</button>
+
+<button class="side-btn" onclick="showPage('sell',this)">
+<span class="icon">➕</span> Sell Product
+</button>
+
+<button class="side-btn" onclick="showPage('whatsapp',this)">
+<span class="icon">💬</span> WhatsApp Selling
+</button>
+
+<button class="side-btn" onclick="showPage('inventory',this)">
+<span class="icon">🏭</span> Inventory
+</button>
+
+<button class="side-btn" onclick="showPage('bills',this)">
+<span class="icon">🧾</span> Bills
+</button>
+
+<button class="side-btn" onclick="showPage('profit',this)">
+<span class="icon">🧮</span> Profit Calculator
+</button>
+
+<button class="side-btn" onclick="showPage('analytics',this)">
+<span class="icon">📈</span> Analytics
+</button>
+
+<button class="side-btn" onclick="showPage('sellerOrders',this)">
+<span class="icon">🚚</span> Seller Orders
+</button>
+
+<button class="side-btn" onclick="showPage('sellerStatus',this)">
+<span class="icon">🏷️</span> My Status
+</button>
+
+<button class="side-btn" onclick="showPage('reviews',this)">
+<span class="icon">⭐</span> Reviews
+</button>
+
+</div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<div class="topbar">
+
+<h3 id="pageTitle">Marketplace</h3>
+
+<div class="profile">
+<span id="welcomeName">User</span>
+<div class="avatar" id="avatar">U</div>
+</div>
+
+</div>
+
+
+<!-- ================= BUYER HOME ================= -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<h1>Discover India's MSME Marketplace</h1>
+
+<p>
+Buy directly from verified small businesses, discover unique Indian products and support local entrepreneurs.
+</p>
+
+<br>
+
+<button class="primary-btn" onclick="showPage('marketplace')">
+Explore Products →
+</button>
+
+</div>
+
+<h2 style="margin-bottom:15px;">Trending Products</h2>
+
+<div class="product-grid" id="homeProducts"></div>
+
+</section>
+
+
+<!-- ================= MARKETPLACE ================= -->
+
+<section id="marketplace" class="page">
+
+<div class="hero">
+
+<h1>🛍️ Explore Marketplace</h1>
+
+<p>
+Discover affordable products directly from MSME businesses.
+No unnecessary middlemen.
+</p>
+
+</div>
+
+<div class="category-row">
+
+<button class="category active" onclick="filterProducts('all',this)">
+✨ All Products
+</button>
+
+<button class="category" onclick="filterProducts('Textiles',this)">
+🧵 Textiles
+</button>
+
+<button class="category" onclick="filterProducts('Food',this)">
+🍱 Food
+</button>
+
+<button class="category" onclick="filterProducts('Home',this)">
+🏠 Home
+</button>
+
+<button class="category" onclick="filterProducts('Handicrafts',this)">
+🎨 Handicrafts
+</button>
+
+</div>
+
+<input class="search" id="searchBox"
+placeholder="🔍 Search sarees, furniture, bangles, food..."
+oninput="renderProducts()">
+
+<div class="product-grid" id="productGrid"></div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section id="myOrders" class="page">
+
+<div class="card">
+
+<h2>📦 My Orders</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Order</th>
+<th>Product</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>#MSME1021</td>
+<td>Handloom Saree</td>
+<td>₹1,499</td>
+<td class="green">Delivered</td>
+</tr>
+
+<tr>
+<td>#MSME1028</td>
+<td>Wooden Craft</td>
+<td>₹899</td>
+<td>🚚 Shipped</td>
+</tr>
+
+<tr>
+<td>#MSME1032</td>
+<td>Spice Box</td>
+<td>₹599</td>
+<td>Processing</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= STATUS BUYER ================= -->
+
+<section id="status" class="page">
+
+<div class="card">
+
+<h2>🏷️ MSME Status</h2>
+
+<p style="color:#777;margin-bottom:20px;">
+See products uploaded by MSME sellers and shop directly.
+</p>
+
+<div class="status-row">
+
+<div class="status">
+<img class="status-img"
+src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80">
+<p>Silk Sarees</p>
+</div>
+
+<div class="status">
+<img class="status-img"
+src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=200&q=80">
+<p>Handicrafts</p>
+</div>
+
+<div class="status">
+<img class="status-img"
+src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=200&q=80">
+<p>Jewellery</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="page">
+
+<div class="hero">
+
+<h1>Seller Dashboard</h1>
+
+<p>
+A quick overview of your MSME business.
+Your individual business tools are available separately in the sidebar.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-icon">💰</div>
+<h3>₹48,250</h3>
+<p>Total Sales</p>
+</div>
+
+<div class="stat">
+<div class="stat-icon">📦</div>
+<h3>128</h3>
+<p>Products Sold</p>
+</div>
+
+<div class="stat">
+<div class="stat-icon">🚚</div>
+<h3>17</h3>
+<p>Pending Orders</p>
+</div>
+
+<div class="stat">
+<div class="stat-icon">⭐</div>
+<h3>4.8</h3>
+<p>Seller Rating</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Quick Access</h2>
+
+<div class="shortcut-grid">
+
+<div class="shortcut" onclick="showPage('products')">
+<div class="shortcut-icon">📦</div>
+<h3>My Products</h3>
+<p>Manage your listings</p>
+</div>
+
+<div class="shortcut" onclick="showPage('inventory')">
+<div class="shortcut-icon">🏭</div>
+<h3>Inventory</h3>
+<p>Track your stock</p>
+</div>
+
+<div class="shortcut" onclick="showPage('bills')">
+<div class="shortcut-icon">🧾</div>
+<h3>Bills</h3>
+<p>Create customer invoices</p>
+</div>
+
+<div class="shortcut" onclick="showPage('profit')">
+<div class="shortcut-icon">🧮</div>
+<h3>Profit Calculator</h3>
+<p>Calculate business profit</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PRODUCTS SELLER ================= -->
+
+<section id="products" class="page">
+
+<div class="card">
+
+<h2>📦 My Products</h2>
+
+<button class="primary-btn" onclick="showPage('sell')">
++ Add New Product
+</button>
+
+<br><br>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Rating</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="sellerProductsTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SELL PRODUCT ================= -->
+
+<section id="sell" class="page">
+
+<div class="card">
+
+<h2>➕ Sell Product</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Product Name</label>
+<input id="newName" placeholder="Example: Cotton Saree">
+</div>
+
+<div class="form-group">
+<label>Category</label>
+<select id="newCategory">
+<option>Textiles</option>
+<option>Food</option>
+<option>Home</option>
+<option>Handicrafts</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Price (₹)</label>
+<input id="newPrice" type="number" placeholder="500">
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="newQty" type="number" placeholder="20">
+</div>
+
+<div class="form-group full">
+<label>Product Image URL</label>
+<input id="newImage" placeholder="Paste image URL">
+</div>
+
+</div>
+
+<button class="primary-btn" onclick="addProduct()">
+Publish Product
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= WHATSAPP ================= -->
+
+<section id="whatsapp" class="page">
+
+<div class="card">
+
+<h2>💬 WhatsApp AI Selling</h2>
+
+<p style="color:#777;margin-bottom:20px;">
+Send your product details through WhatsApp and the system automatically prepares a listing.
+</p>
+
+<div class="whatsapp">
+
+<div class="wa-header">
+
+<div class="wa-avatar">🏭</div>
+
+<div>
+<strong>MSME Market Business</strong>
+<br>
+<small>Business Account</small>
+</div>
+
+</div>
+
+<div class="wa-body" id="waBody">
+
+<div class="message incoming">
+👋 Hello! Send your product name, price and quantity.
+<br><br>
+You can also send a product photo or voice message.
+</div>
+
+</div>
+
+<div class="wa-input">
+
+<input id="waInput"
+placeholder="saree 500rs 20 pieces"
+onkeydown="if(event.key==='Enter')sendWhatsApp()">
+
+<button class="send" onclick="sendWhatsApp()">➤</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= INVENTORY ================= -->
+
+<section id="inventory" class="page">
+
+<div class="card">
+
+<h2>🏭 Inventory Management</h2>
+
+<p style="color:#777;margin-bottom:20px;">
+Track stock levels and quickly update available quantity.
+</p>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>SKU</th>
+<th>Current Stock</th>
+<th>Low Stock Level</th>
+<th>Status</th>
+<th>Update</th>
+</tr>
+</thead>
+
+<tbody id="inventoryTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= BILLS ================= -->
+
+<section id="bills" class="page">
+
+<div class="card">
+
+<h2>🧾 Bills & Invoices</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Customer Name</label>
+<input id="billCustomer" placeholder="Customer name">
+</div>
+
+<div class="form-group">
+<label>Customer Phone</label>
+<input id="billPhone" placeholder="9876543210">
+</div>
+
+<div class="form-group">
+<label>Product</label>
+<input id="billProduct" placeholder="Product name">
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="billQty" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Price per Unit (₹)</label>
+<input id="billPrice" type="number" placeholder="500">
+</div>
+
+</div>
+
+<button class="primary-btn" onclick="generateBill()">
+Generate Bill
+</button>
+
+<div id="billResult"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Invoice History</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Invoice</th>
+<th>Customer</th>
+<th>Product</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody id="billHistory">
+
+<tr>
+<td>#INV001</td>
+<td>Rahul</td>
+<td>Cotton Saree</td>
+<td>₹1,000</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PROFIT ================= -->
+
+<section id="profit" class="page">
+
+<div class="card">
+
+<h2>🧮 Profit Calculator</h2>
+
+<p style="color:#777;margin-bottom:20px;">
+Calculate your actual profit after business expenses.
+</p>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Selling Price per Unit (₹)</label>
+<input id="sellingPrice" type="number" placeholder="1000">
+</div>
+
+<div class="form-group">
+<label>Cost Price per Unit (₹)</label>
+<input id="costPrice" type="number" placeholder="600">
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="profitQty" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Packaging Cost (₹)</label>
+<input id="packCost" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Shipping Cost (₹)</label>
+<input id="shipCost" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Other Expenses (₹)</label>
+<input id="otherCost" type="number" value="0">
+</div>
+
+</div>
+
+<button class="primary-btn" onclick="calculateProfit()">
+Calculate Profit
+</button>
+
+<div class="result-box" id="profitResult">
+Enter your numbers and calculate.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ANALYTICS ================= -->
+
+<section id="analytics" class="page">
+
+<div class="card">
+
+<h2>📈 Business Analytics</h2>
+
+<p style="color:#777;margin-bottom:25px;">
+Your sales performance over the last few days.
+</p>
+
+<div class="chart">
+
+<div class="bar" style="height:45%;"><span>Mon</span></div>
+<div class="bar" style="height:65%;"><span>Tue</span></div>
+<div class="bar" style="height:55%;"><span>Wed</span></div>
+<div class="bar" style="height:80%;"><span>Thu</span></div>
+<div class="bar" style="height:70%;"><span>Fri</span></div>
+<div class="bar" style="height:95%;"><span>Sat</span></div>
+<div class="bar" style="height:75%;"><span>Sun</span></div>
+
+</div>
+
+<br><br>
+
+<div class="stats">
+
+<div class="stat">
+<h3>₹48,250</h3>
+<p>Revenue</p>
+</div>
+
+<div class="stat">
+<h3>₹14,800</h3>
+<p>Estimated Profit</p>
+</div>
+
+<div class="stat">
+<h3>128</h3>
+<p>Units Sold</p>
+</div>
+
+<div class="stat">
+<h3>4.8 ⭐</h3>
+<p>Rating</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SELLER ORDERS ================= -->
+
+<section id="sellerOrders" class="page">
+
+<div class="card">
+
+<h2>🚚 Seller Orders</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Buyer</th>
+<th>Product</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>#ORD201</td>
+<td>Ananya</td>
+<td>Silk Saree</td>
+<td>₹1,499</td>
+<td class="green">Delivered</td>
+<td><button class="small-btn">View</button></td>
+</tr>
+
+<tr>
+<td>#ORD202</td>
+<td>Rahul</td>
+<td>Spice Box</td>
+<td>₹699</td>
+<td>Processing</td>
+<td><button class="small-btn">Update</button></td>
+</tr>
+
+<tr>
+<td>#ORD203</td>
+<td>Sneha</td>
+<td>Wooden Craft</td>
+<td>₹899</td>
+<td>Pending</td>
+<td><button class="small-btn">Accept</button></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SELLER STATUS ================= -->
+
+<section id="sellerStatus" class="page">
+
+<div class="card">
+
+<h2>🏷️ My MSME Status</h2>
+
+<p style="color:#777;margin-bottom:20px;">
+Upload products as Status updates. Buyers can discover and purchase them.
+</p>
+
+<div class="form-group">
+
+<label>Status Image</label>
+<input type="file" id="statusFile" accept="image/*">
+
+</div>
+
+<div class="form-group">
+
+<label>Status Caption</label>
+<input id="statusCaption"
+placeholder="New cotton saree collection — ₹799">
+
+</div>
+
+<button class="primary-btn" onclick="addStatus()">
+Publish Status
+</button>
+
+<div id="sellerStatusPreview" style="margin-top:25px;"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= REVIEWS ================= -->
+
+<section id="reviews" class="page">
+
+<div class="card">
+
+<h2>⭐ Reviews & Ratings</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h3>4.8 ⭐</h3>
+<p>Overall Rating</p>
+</div>
+
+<div class="stat">
+<h3>126</h3>
+<p>Total Reviews</p>
+</div>
+
+</div>
+
+<hr><br>
+
+<h3>★★★★★</h3>
+
+<p style="margin:8px 0;">
+"Beautiful product and excellent quality."
+</p>
+
+<small>— Verified Buyer</small>
+
+<br><br>
+<hr><br>
+
+<h3>★★★★☆</h3>
+
+<p style="margin:8px 0;">
+"Good product. Delivery was quick."
+</p>
+
+<small>— Verified Buyer</small>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+</div>
+
+
+<!-- ================= CHECKOUT MODAL ================= -->
+
+<div class="modal" id="checkoutModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal()">×</button>
+
+<h2>🛒 Checkout</h2>
+
+<div id="checkoutProduct"></div>
+
+<br>
+
+<div class="form-group">
+<label>Delivery Address</label>
+<textarea id="address" rows="4"
+placeholder="Enter your full delivery address"></textarea>
+</div>
+
+<div class="form-group">
+<label>Payment Method</label>
+
+<select id="paymentMethod">
+<option>UPI</option>
+<option>Debit / Credit Card</option>
+<option>Cash on Delivery</option>
+</select>
+
+</div>
+
+<button class="primary-btn" style="width:100%;"
+onclick="placeOrder()">
+Pay & Place Order
+</button>
+
+</div>
+</div>
+
+
+<script>
+
+/* ================= DATA ================= */
+
+let loginRole = "buyer";
+let currentMode = "buyer";
+let selectedCategory = "all";
+
+let products = [
+
+{
+name:"Handloom Silk Saree",
+category:"Textiles",
+price:1499,
+stock:25,
+rating:4.8,
+image:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+name:"Traditional Wooden Craft",
+category:"Handicrafts",
+price:899,
+stock:18,
+rating:4.7,
+image:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+name:"Indian Spice Box",
+category:"Food",
+price:599,
+stock:42,
+rating:4.9,
+image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+name:"Handmade Home Decor",
+category:"Home",
+price:799,
+stock:12,
+rating:4.6,
+image:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+name:"Cotton Saree",
+category:"Textiles",
+price:699,
+stock:30,
+rating:4.5,
+image:"https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+name:"Handmade Jewellery",
+category:"Handicrafts",
+price:499,
+stock:20,
+rating:4.8,
+image:"https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=700&q=80"
+}
+
+];
+
+let userOrders=[];
+
+
+/* ================= LOGIN ================= */
+
+function chooseLoginRole(button,role){
+
+loginRole=role;
+
+document.querySelectorAll(".role-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+}
+
+
+function login(){
+
+let name=document.getElementById("loginName").value.trim();
+
+if(!name){
+name="MSME User";
+}
+
+document.getElementById("loginPage").style.display="none";
+document.getElementById("app").style.display="block";
+
+document.getElementById("welcomeName").innerText=name;
+
+document.getElementById("avatar").innerText=
+name.charAt(0).toUpperCase();
+
+if(loginRole==="seller"){
+setMode("seller");
+}else{
+setMode("buyer");
+}
+
+renderProducts();
+renderHomeProducts();
+renderSellerProducts();
+renderInventory();
+
+}
+
+
+/* ================= BUYER / SELLER SWITCH ================= */
+
+function switchMode(){
+
+if(currentMode==="buyer"){
+setMode("seller");
+}else{
+setMode("buyer");
+}
+
+}
+
+
+function setMode(mode){
+
+currentMode=mode;
+
+let buyer=document.getElementById("buyerSidebar");
+let seller=document.getElementById("sellerSidebar");
+
+let modeName=document.getElementById("modeName");
+let switchBtn=document.querySelector(".switch-btn");
+
+if(mode==="buyer"){
+
+buyer.style.display="block";
+seller.style.display="none";
+
+modeName.innerText="🛍️ BUYER";
+switchBtn.innerText="🔄 Switch to Seller";
+
+showPage("home");
+
+}else{
+
+buyer.style.display="none";
+seller.style.display="block";
+
+modeName.innerText="🏭 SELLER";
+switchBtn.innerText="🔄 Switch to Buyer";
+
+showPage("dashboard");
+
+}
+
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+function showPage(pageId,button=null){
+
+document.querySelectorAll(".page")
+.forEach(page=>page.classList.remove("active"));
+
+let page=document.getElementById(pageId);
+
+if(!page)return;
+
+page.classList.add("active");
+
+document.querySelectorAll(".side-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+if(button){
+button.classList.add("active");
+}
+
+let titles={
+
+home:"Marketplace",
+marketplace:"Explore Products",
+myOrders:"My Orders",
+status:"MSME Status",
+
+dashboard:"Seller Dashboard",
+products:"My Products",
+sell:"Sell Product",
+whatsapp:"WhatsApp Selling",
+inventory:"Inventory",
+bills:"Bills",
+profit:"Profit Calculator",
+analytics:"Analytics",
+sellerOrders:"Seller Orders",
+sellerStatus:"My Status",
+reviews:"Reviews"
+
+};
+
+document.getElementById("pageTitle").innerText=
+titles[pageId] || "MSME Marketplace";
+
+if(pageId==="products"){
+renderSellerProducts();
+}
+
+if(pageId==="inventory"){
+renderInventory();
+}
+
+}
+
+
+/* ================= PRODUCTS ================= */
+
+function renderHomeProducts(){
+
+let container=document.getElementById("homeProducts");
+
+container.innerHTML=products.slice(0,4).map(productCard).join("");
+
+}
+
+
+function renderProducts(){
+
+let search=
+(document.getElementById("searchBox")?.value || "")
+.toLowerCase();
+
+let filtered=products.filter(p=>{
+
+let categoryMatch=
+selectedCategory==="all" ||
+p.category===selectedCategory;
+
+let searchMatch=
+p.name.toLowerCase().includes(search);
+
+return categoryMatch && searchMatch;
+
+});
+
+document.getElementById("productGrid").innerHTML=
+filtered.map(productCard).join("");
+
+}
+
+
+function productCard(p){
+
+return `
+
+<div class="product-card">
+
+<img class="product-img"
+src="${p.image}"
+onerror="this.src='https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=700&q=80'">
+
+<div class="product-info">
+
+<span class="badge">Best Seller</span>
+
+<div class="product-name">
+${p.name}
+</div>
+
+<div class="rating">
+★★★★★ ${p.rating}
+</div>
+
+<div class="price">
+₹${p.price.toLocaleString()}
+</div>
+
+<p style="color:#777;font-size:13px;margin-top:5px;">
+${p.stock} available
+</p>
+
+<button class="buy-btn"
+onclick='buyProduct(${JSON.stringify(p)})'>
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+function filterProducts(category,button){
+
+selectedCategory=category;
+
+document.querySelectorAll(".category")
+.forEach(x=>x.classList.remove("active"));
+
+button.classList.add("active");
+
+renderProducts();
+
+}
+
+
+/* ================= CHECKOUT ================= */
+
+let selectedProduct=null;
+
+function buyProduct(product){
+
+selectedProduct=product;
+
+document.getElementById("checkoutProduct").innerHTML=`
+
+<div style="display:flex;gap:15px;align-items:center;">
+
+<img src="${product.image}"
+style="width:90px;height:90px;object-fit:cover;border-radius:12px;">
+
+<div>
+<strong>${product.name}</strong>
+<br>
+<span style="color:#70264b;font-size:20px;font-weight:bold;">
+₹${product.price}
+</span>
+<br>
+<small>Seller verified • ⭐ ${product.rating}</small>
+</div>
+
+</div>
+
+`;
+
+document.getElementById("checkoutModal").style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById("checkoutModal").style.display="none";
+
+}
+
+
+function placeOrder(){
+
+let address=document.getElementById("address").value;
+
+if(!address){
+alert("Please enter your delivery address.");
+return;
+}
+
+userOrders.push(selectedProduct);
+
+closeModal();
+
+alert(
+"Order placed successfully! 🎉\n\n"+
+"Payment received in protected payment flow.\n"+
+"Seller payment is released after delivery confirmation."
+);
+
+}
+
+
+/* ================= SELLER PRODUCTS ================= */
+
+function renderSellerProducts(){
+
+let table=document.getElementById("sellerProductsTable");
+
+if(!table)return;
+
+table.innerHTML=products.map((p,index)=>`
+
+<tr>
+
+<td>${p.name}</td>
+
+<td>${p.category}</td>
+
+<td>₹${p.price}</td>
+
+<td>${p.stock}</td>
+
+<td>⭐ ${p.rating}</td>
+
+<td>
+<button class="small-btn"
+onclick="deleteProduct(${index})">
+Delete
+</button>
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+function addProduct(){
+
+let name=document.getElementById("newName").value.trim();
+let category=document.getElementById("newCategory").value;
+let price=Number(document.getElementById("newPrice").value);
+let qty=Number(document.getElementById("newQty").value);
+let image=document.getElementById("newImage").value.trim();
+
+if(!name || !price || !qty){
+
+alert("Please enter product name, price and quantity.");
+
+return;
+}
+
+if(!image){
+
+image="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=700&q=80";
+
+}
+
+products.push({
+
+name:name,
+category:category,
+price:price,
+stock:qty,
+rating:5,
+image:image
+
+});
+
+alert("Product listed successfully! 🎉");
+
+document.getElementById("newName").value="";
+document.getElementById("newPrice").value="";
+document.getElementById("newQty").value="";
+document.getElementById("newImage").value="";
+
+renderSellerProducts();
+renderProducts();
+renderHomeProducts();
+renderInventory();
+
+showPage("products");
+
+}
+
+
+function deleteProduct(index){
+
+if(confirm("Delete this product?")){
+
+products.splice(index,1);
+
+renderSellerProducts();
+renderProducts();
+renderHomeProducts();
+renderInventory();
+
+}
+
+}
+
+
+/* ================= INVENTORY ================= */
+
+function renderInventory(){
+
+let table=document.getElementById("inventoryTable");
+
+if(!table)return;
+
+table.innerHTML=products.map((p,index)=>{
+
+let status=
+p.stock<=5
+? `<span class="red">Low Stock</span>`
+: `<span class="green">In Stock</span>`;
+
+return `
+
+<tr>
+
+<td>${p.name}</td>
+
+<td>MSME-${1000+index}</td>
+
+<td><strong>${p.stock}</strong></td>
+
+<td>5</td>
+
+<td>${status}</td>
+
+<td>
+
+<button class="small-btn"
+onclick="changeStock(${index},-1)">
+−
+</button>
+
+<button class="small-btn"
+onclick="changeStock(${index},1)">
++
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+function changeStock(index,amount){
+
+products[index].stock+=amount;
+
+if(products[index].stock<0){
+products[index].stock=0;
+}
+
+renderInventory();
+renderSellerProducts();
+renderProducts();
+
+}
+
+
+/* ================= WHATSAPP ================= */
+
+function sendWhatsApp(){
+
+let input=document.getElementById("waInput");
+
+let text=input.value.trim();
+
+if(!text)return;
+
+let body=document.getElementById("waBody");
+
+body.innerHTML+=`
+
+<div class="message outgoing">
+${text}
+</div>
+
+`;
+
+input.value="";
+
+body.innerHTML+=`
+
+<div class="message incoming"
+id="analyzing">
+Analyzing your message... 🤖
+</div>
+
+`;
+
+body.scrollTop=body.scrollHeight;
+
+
+setTimeout(()=>{
+
+document.getElementById("analyzing").remove();
+
+let priceMatch=text.match(/(\d+)\s*(rs|₹|rupees)/i);
+let qtyMatch=text.match(/(\d+)\s*(pieces|piece|pcs)/i);
+
+let price=priceMatch ? priceMatch[1] : "500";
+let qty=qtyMatch ? qtyMatch[1] : "1";
+
+let name=text
+.replace(/(\d+)\s*(rs|₹|rupees)/ig,"")
+.replace(/(\d+)\s*(pieces|piece|pcs)/ig,"")
+.trim();
+
+if(!name){
+name="New MSME Product";
+}
+
+body.innerHTML+=`
+
+<div class="message incoming">
+
+<strong>🤖 Product detected!</strong>
+
+<br><br>
+
+📦 <strong>${name}</strong>
+<br>
+💰 Price: ₹${price}
+<br>
+📊 Quantity: ${qty}
+
+<br><br>
+
+<button class="primary-btn"
+style="padding:8px 12px;"
+onclick="confirmWhatsAppProduct('${name}',${price},${qty})">
+
+✓ Confirm Listing
+
+</button>
+
+</div>
+
+`;
+
+body.scrollTop=body.scrollHeight;
+
+},1500);
+
+}
+
+
+function confirmWhatsAppProduct(name,price,qty){
+
+products.push({
+
+name:name,
+category:"Textiles",
+price:Number(price),
+stock:Number(qty),
+rating:5,
+image:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80"
+
+});
+
+alert("Product successfully added to your marketplace listing! 🎉");
+
+renderProducts();
+renderHomeProducts();
+renderSellerProducts();
+renderInventory();
+
+}
+
+
+/* ================= BILLS ================= */
+
+function generateBill(){
+
+let customer=document.getElementById("billCustomer").value || "Walk-in Customer";
+let product=document.getElementById("billProduct").value || "Product";
+let qty=Number(document.getElementById("billQty").value)||1;
+let price=Number(document.getElementById("billPrice").value)||0;
+
+let total=qty*price;
+
+document.getElementById("billResult").innerHTML=`
+
+<div class="result-box">
+
+<h3>INVOICE #INV${Math.floor(Math.random()*900+100)}</h3>
+
+<br>
+
+<p><strong>Customer:</strong> ${customer}</p>
+
+<p><strong>Product:</strong> ${product}</p>
+
+<p><strong>Quantity:</strong> ${qty}</p>
+
+<p><strong>Unit Price:</strong> ₹${price}</p>
+
+<hr style="margin:15px 0;">
+
+<h2>Total: ₹${total.toLocaleString()}</h2>
+
+<br>
+
+<button class="primary-btn" onclick="window.print()">
+🖨️ Print Invoice
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* ================= PROFIT CALCULATOR ================= */
+
+function calculateProfit(){
+
+let selling=Number(document.getElementById("sellingPrice").value)||0;
+let cost=Number(document.getElementById("costPrice").value)||0;
+let qty=Number(document.getElementById("profitQty").value)||1;
+
+let packaging=Number(document.getElementById("packCost").value)||0;
+let shipping=Number(document.getElementById("shipCost").value)||0;
+let other=Number(document.getElementById("otherCost").value)||0;
+
+let revenue=selling*qty;
+
+let totalCost=
+(cost*qty)+
+packaging+
+shipping+
+other;
+
+let profit=revenue-totalCost;
+
+let margin=
+revenue>0
+? ((profit/revenue)*100).toFixed(2)
+:0;
+
+document.getElementById("profitResult").innerHTML=`
+
+<div class="stats">
+
+<div>
+<p>Total Revenue</p>
+<div class="result-number">
+₹${revenue.toLocaleString()}
+</div>
+</div>
+
+<div>
+<p>Total Cost</p>
+<div class="result-number">
+₹${totalCost.toLocaleString()}
+</div>
+</div>
+
+<div>
+<p>Profit</p>
+<div class="result-number">
+₹${profit.toLocaleString()}
+</div>
+</div>
+
+<div>
+<p>Profit Margin</p>
+<div class="result-number">
+${margin}%
+</div>
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ================= SELLER STATUS ================= */
+
+function addStatus(){
+
+let file=document.getElementById("statusFile").files[0];
+
+let caption=document.getElementById("statusCaption").value;
+
+if(!file){
+
+alert("Please choose an image.");
+
+return;
+}
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+document.getElementById("sellerStatusPreview").innerHTML=`
+
+<div style="max-width:250px;">
+
+<img src="${e.target.result}"
+style="width:100%;height:280px;object-fit:cover;border-radius:18px;">
+
+<h3 style="margin-top:10px;">
+${caption || "New Product"}
+</h3>
+
+<p style="color:#18834b;margin-top:5px;">
+● Live for buyers
+</p>
+
+</div>
+
+`;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+</script>
+
+</body>
+</html>
